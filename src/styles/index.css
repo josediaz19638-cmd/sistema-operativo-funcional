@@ -1,0 +1,96 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Glassmorphism custom classes */
+.glass-panel {
+  background: rgba(14, 4, 24, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-dock {
+  background: rgba(14, 4, 24, 0.35);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 15px 35px -5px rgba(0, 0, 0, 0.6),
+    0 5px 15px -5px rgba(168, 85, 247, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.glass-topbar {
+  background: rgba(22, 10, 36, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Reflective floor glow & reflection effects */
+.glow-text {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.8), 0 0 20px rgba(236, 72, 153, 0.5);
+}
+
+.neon-border {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.15), inset 0 0 15px rgba(168, 85, 247, 0.07);
+}
+
+.neon-border-active {
+  border: 1px solid rgba(236, 72, 153, 0.5);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.35), inset 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* Custom reflections */
+.dock-reflection {
+  position: relative;
+}
+
+.dock-reflection::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: inherit;
+  backdrop-filter: inherit;
+  -webkit-backdrop-filter: inherit;
+  border: inherit;
+  border-top: none;
+  transform: scaleY(-1) translateY(4px);
+  opacity: 0.15;
+  filter: blur(4px);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Animations */
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.5)) drop-shadow(0 0 8px rgba(168, 85, 247, 0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(236, 72, 153, 0.8)) drop-shadow(0 0 18px rgba(168, 85, 247, 0.6));
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 3s infinite ease-in-out;
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
