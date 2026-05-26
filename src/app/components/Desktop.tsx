@@ -4,20 +4,21 @@
 // 2. Coloca aquí el nombre del archivo: '/wallpaper.jpg'
 // 3. Si dejas esto vacío (''), se mostrará el fondo de neón/aurora animado por defecto.
 // =========================================================================
-const WALLPAPER_URL = '/wallpaper.png'; 
-
 interface DesktopProps {
   onOpenApp: (appName: string) => void;
+  wallpaper?: string;
 }
 
-export function Desktop({ onOpenApp }: DesktopProps) {
+export function Desktop({ onOpenApp, wallpaper = '' }: DesktopProps) {
+  const showWallpaper = wallpaper !== 'aurora' && wallpaper !== '';
+  
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#060012] select-none">
-      {WALLPAPER_URL ? (
+      {showWallpaper ? (
         /* Fondo de pantalla personalizado a pantalla completa */
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${WALLPAPER_URL})` }}
+          style={{ backgroundImage: `url(${wallpaper})` }}
         />
       ) : (
         <>

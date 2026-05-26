@@ -147,6 +147,21 @@ const TrashIconSvg = () => (
 
 
 export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }: TaskbarProps) {
+  function ImageIcon({ src, alt, className, fallback }: { src: string; alt: string; className?: string; fallback?: React.ReactNode }) {
+    const [ok, setOk] = useState(true);
+    if (!ok) return <>{fallback ?? null}</>;
+    return (
+      <div className="inline-flex items-center justify-center w-full h-full p-1 rounded-md bg-gradient-to-br from-[#0f0519]/40 to-[#20102a]/30 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
+        <img
+          src={src}
+          alt={alt}
+          className={`${className ?? ''} max-w-full max-h-full object-contain`} 
+          onError={() => setOk(false)}
+        />
+      </div>
+    );
+  }
+
   const [showStartMenu, setShowStartMenu] = useState(false);
 
   useEffect(() => {
@@ -157,25 +172,25 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
 
   // Lista completa de aplicaciones en el Dock (coincide exactamente con la imagen)
   const dockApps = [
-    { name: 'Home', icon: <HomeIconSvg />, action: () => setShowStartMenu(prev => !prev), isSystem: true },
-    { name: 'Browser', icon: <BrowserIconSvg />, app: 'Browser' },
-    { name: 'Media Player', icon: <PlayIconSvg />, app: 'Media Player' },
-    { name: 'Terminal', icon: <CodeIconSvg />, app: 'Terminal' },
-    { name: 'File Explorer', icon: <FolderIconSvg />, app: 'File Explorer' },
-    { name: 'Music Player', icon: <MusicIconSvg />, app: 'Music Player' },
-    { name: 'Settings', icon: <GearIconSvg />, app: 'Settings' }
+    { name: 'Home', icon: <ImageIcon src="/icons/home.png" alt="Home" className="w-full h-full" fallback={<HomeIconSvg />} />, action: () => setShowStartMenu(prev => !prev), isSystem: true },
+    { name: 'Browser', icon: <ImageIcon src="/icons/browser.png" alt="Browser" className="w-full h-full" fallback={<BrowserIconSvg />} />, app: 'Browser' },
+    { name: 'Media Player', icon: <ImageIcon src="/icons/media-player.png" alt="Media Player" className="w-full h-full" fallback={<PlayIconSvg />} />, app: 'Media Player' },
+    { name: 'Terminal', icon: <ImageIcon src="/icons/terminal.png" alt="Terminal" className="w-full h-full" fallback={<CodeIconSvg />} />, app: 'Terminal' },
+    { name: 'File Explorer', icon: <ImageIcon src="/icons/file-explorer.png" alt="File Explorer" className="w-full h-full" fallback={<FolderIconSvg />} />, app: 'File Explorer' },
+    { name: 'Music Player', icon: <ImageIcon src="/icons/music.png" alt="Music" className="w-full h-full" fallback={<MusicIconSvg />} />, app: 'Music Player' },
+    { name: 'Settings', icon: <ImageIcon src="/icons/settings.png" alt="Settings" className="w-full h-full" fallback={<GearIconSvg />} />, app: 'Settings' }
   ];
 
   // Lista de todas las aplicaciones disponibles en el Menú Inicio (Home)
   const startMenuApps = [
-    { name: 'Browser', icon: <BrowserIconSvg />, app: 'Browser' },
-    { name: 'Notepad', icon: <NotepadIconSvg />, app: 'Notepad' },
-    { name: 'Terminal', icon: <CodeIconSvg />, app: 'Terminal' },
-    { name: 'File Explorer', icon: <FolderIconSvg />, app: 'File Explorer' },
-    { name: 'Media Player', icon: <PlayIconSvg />, app: 'Media Player' },
-    { name: 'Music Player', icon: <MusicIconSvg />, app: 'Music Player' },
-    { name: 'Settings', icon: <GearIconSvg />, app: 'Settings' },
-    { name: 'Recycle Bin', icon: <TrashIconSvg />, app: 'Recycle Bin' }
+    { name: 'Browser', icon: <ImageIcon src="/icons/browser.png" alt="Browser" className="w-full h-full" fallback={<BrowserIconSvg />} />, app: 'Browser' },
+    { name: 'Notepad', icon: <ImageIcon src="/icons/notepad.png" alt="Notepad" className="w-full h-full" fallback={<NotepadIconSvg />} />, app: 'Notepad' },
+    { name: 'Terminal', icon: <ImageIcon src="/icons/terminal.png" alt="Terminal" className="w-full h-full" fallback={<CodeIconSvg />} />, app: 'Terminal' },
+    { name: 'File Explorer', icon: <ImageIcon src="/icons/file-explorer.png" alt="File Explorer" className="w-full h-full" fallback={<FolderIconSvg />} />, app: 'File Explorer' },
+    { name: 'Media Player', icon: <ImageIcon src="/icons/media-player.png" alt="Media Player" className="w-full h-full" fallback={<PlayIconSvg />} />, app: 'Media Player' },
+    { name: 'Music Player', icon: <ImageIcon src="/icons/music.png" alt="Music" className="w-full h-full" fallback={<MusicIconSvg />} />, app: 'Music Player' },
+    { name: 'Settings', icon: <ImageIcon src="/icons/settings.png" alt="Settings" className="w-full h-full" fallback={<GearIconSvg />} />, app: 'Settings' },
+    { name: 'Recycle Bin', icon: <ImageIcon src="/icons/recycle-bin.png" alt="Recycle Bin" className="w-full h-full" fallback={<TrashIconSvg />} />, app: 'Recycle Bin' }
   ];
 
   const handleDockItemClick = (item: typeof dockApps[0]) => {
@@ -227,7 +242,7 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
                 </div>
                 <div>
                   <div className="font-semibold text-white text-sm tracking-wide">Usuario Local</div>
-                  <div className="text-[10px] text-purple-300 font-mono opacity-80">user@neon-os</div>
+                  <div className="text-[10px] text-purple-300 font-mono opacity-80">user@seros</div>
                 </div>
               </div>
             </div>

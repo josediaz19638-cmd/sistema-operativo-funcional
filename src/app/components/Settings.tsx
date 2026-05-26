@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Settings as SettingsIcon, Monitor, Cpu, Shield, HelpCircle } from 'lucide-react';
+import { Settings as SettingsIcon, Monitor, Cpu, Shield, HelpCircle, Sun, Moon, Volume2, Palette } from 'lucide-react';
 
-export function Settings() {
+interface SettingsProps {
+  selectedWallpaper: string;
+  glassmorphismEnabled: boolean;
+  onWallpaperChange: (wallpaper: string) => void;
+  onGlassmorphismChange: (enabled: boolean) => void;
+}
+
+export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperChange, onGlassmorphismChange }: SettingsProps) {
   const [activeTab, setActiveTab] = useState<'system' | 'personalization' | 'about'>('system');
   const [cpuUsage, setCpuUsage] = useState(12);
   const [ramUsage, setRamUsage] = useState(4.2);
@@ -18,6 +25,14 @@ export function Settings() {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  const wallpaperOptions = [
+    { name: 'Neon Aurora', value: 'aurora', color: 'from-purple-900 to-pink-600', icon: <Sun className="w-3 h-3 text-yellow-300" /> },
+    { name: 'Oscuro Puro', value: '', color: 'bg-[#03000b]', icon: <Moon className="w-3 h-3 text-slate-300" /> },
+    { name: 'Espacio Profundo', value: '/1.1.jpg', color: 'from-blue-900 to-indigo-950', icon: <Monitor className="w-3 h-3 text-blue-300" /> },
+    { name: 'Mar Nocturno', value: '/2.jpg', color: 'from-teal-900 to-slate-950', icon: <Monitor className="w-3 h-3 text-teal-300" /> },
+    { name: 'Abstracto', value: '/wallpaper.png', color: 'from-violet-900 to-fuchsia-950', icon: <Palette className="w-3 h-3 text-fuchsia-300" /> },
+  ];
 
   return (
     <div className="h-full flex text-slate-100 bg-[#0d071e]/40 select-none">
@@ -66,7 +81,7 @@ export function Settings() {
               <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                 <Cpu className="w-5 h-5 text-purple-400" /> Rendimiento del Sistema
               </h2>
-              <p className="text-xs text-slate-400">Estadísticas simuladas en tiempo real de tu NeonOS.</p>
+              <p className="text-xs text-slate-400">Estadísticas simuladas en tiempo real de tu SerOS.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -111,33 +126,73 @@ export function Settings() {
               <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                 <Monitor className="w-5 h-5 text-purple-400" /> Personalización Visual
               </h2>
-              <p className="text-xs text-slate-400">Modifica el comportamiento y estética del escritorio.</p>
+              <p className="text-xs text-slate-400">Modifica el fondo de pantalla y el estilo del escritorio.</p>
             </div>
 
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                <span className="text-xs font-bold text-white block mb-2">Fondos de Pantalla</span>
-                <p className="text-[10px] text-slate-400 mb-3">En el siguiente paso podrás arrastrar tu propia imagen aquí para establecerla como fondo. Por ahora, el fondo CSS premium está activo.</p>
-                <div className="flex gap-3">
-                  <div className="w-20 h-12 rounded-lg border border-purple-500/40 bg-gradient-to-tr from-purple-900 to-pink-600 cursor-pointer flex items-center justify-center text-[9px] font-bold text-white shadow-lg">
-                    Neon Aurora
-                  </div>
-                  <div className="w-20 h-12 rounded-lg border border-white/5 bg-[#03000b] hover:border-purple-500/20 cursor-pointer flex items-center justify-center text-[9px] text-slate-500">
-                    Oscuro Puro
-                  </div>
-                  <div className="w-20 h-12 rounded-lg border border-white/5 bg-gradient-to-r from-blue-900 to-indigo-950 hover:border-purple-500/20 cursor-pointer flex items-center justify-center text-[9px] text-slate-500">
-                    Espacio Profundo
-                  </div>
-                </div>
+            {/* Wallpaper Selector */}
+            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+              <span className="text-xs font-bold text-white block mb-3">Fondo de Pantalla</span>
+              <div className="flex gap-3 flex-wrap">
+                {wallpaperOptions.map((wp) => (
+                  <button
+                    key={wp.value}
+                    onClick={() => onWallpaperChange(wp.value)}
+                    className={`w-24 h-16 rounded-lg bg-gradient-to-br ${wp.color} border-2 flex flex-col items-center justify-center gap-1 text-[9px] font-bold transition-all duration-200 cursor-pointer ${
+                      selectedWallpaper === wp.value
+                        ? 'border-purple-500 shadow-[0_0_12px_rgba(168,85,247,0.5)] scale-105'
+                        : 'border-white/10 hover:border-purple-400/50 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    {wp.icon}
+                    <span className={selectedWallpaper === wp.value ? 'text-white' : 'text-slate-400'}>
+                      {wp.name}
+                    </span>
+                  </button>
+                ))}
               </div>
+            </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex justify-between items-center">
+            {/* Glassmorphism Toggle */}
+            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className={`p-2 rounded-lg ${glassmorphismEnabled ? 'bg-purple-500/20' : 'bg-white/5'}`}>
+                  <Monitor className={`w-5 h-5 ${glassmorphismEnabled ? 'text-purple-400' : 'text-slate-500'}`} />
+                </div>
                 <div>
                   <span className="text-xs font-bold text-white block">Efecto Glassmorphism</span>
                   <span className="text-[10px] text-slate-400">Activa desenfoques de fondo premium (Backdrop Blur)</span>
                 </div>
-                <div className="w-10 h-5 bg-purple-600 rounded-full p-0.5 cursor-pointer flex justify-end">
-                  <div className="w-4 h-4 bg-white rounded-full" />
+              </div>
+              <button
+                onClick={() => onGlassmorphismChange(!glassmorphismEnabled)}
+                className={`relative w-12 h-6 rounded-full p-0.5 cursor-pointer transition-all duration-300 ${
+                  glassmorphismEnabled ? 'bg-purple-600' : 'bg-white/20'
+                }`}
+              >
+                <div className={`w-5 h-5 bg-white rounded-full transition-all duration-300 shadow-md ${
+                  glassmorphismEnabled ? 'translate-x-6' : 'translate-x-0'
+                }`} />
+              </button>
+            </div>
+
+            {/* Otras opciones visuales */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <Volume2 className="w-4 h-4 text-purple-300" />
+                  <span className="text-xs font-bold text-white">Efectos de Sonido</span>
+                </div>
+                <div className="w-12 h-6 bg-white/20 rounded-full p-0.5 cursor-pointer opacity-50">
+                  <div className="w-5 h-5 bg-white rounded-full" />
+                </div>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <Sun className="w-4 h-4 text-yellow-300" />
+                  <span className="text-xs font-bold text-white">Tema Oscuro</span>
+                </div>
+                <div className="w-12 h-6 bg-purple-600 rounded-full p-0.5 cursor-pointer flex justify-end opacity-80">
+                  <div className="w-5 h-5 bg-white rounded-full" />
                 </div>
               </div>
             </div>
@@ -147,18 +202,18 @@ export function Settings() {
         {activeTab === 'about' && (
           <div className="space-y-6">
             <div className="text-center py-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)]">
-                <SettingsIcon className="w-9 h-9 text-white animate-spin-slow" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.5)] bg-white/5 p-2">
+                <img src="/icons/seros.png" alt="SerOS" className="w-full h-full object-contain" />
               </div>
-              <h2 className="text-xl font-black tracking-widest text-white mb-1">NeonOS</h2>
+              <h2 className="text-xl font-black tracking-widest text-white mb-1">SerOS</h2>
               <span className="text-[10px] font-mono text-purple-400 font-bold bg-purple-950/40 px-2.5 py-0.5 rounded-full border border-purple-800/30">Version 1.0.0</span>
               <p className="text-xs text-slate-400 mt-4 max-w-sm mx-auto leading-relaxed">
-                Un entorno de escritorio simulado interactivo, construido con React, Tailwind CSS y mucho amor al diseño moderno y futurista.
+                Creado por estudiantes de UNIPAZ - Un entorno de escritorio simulado interactivo, construido con React, Tailwind CSS y mucho amor al diseño moderno y futurista.
               </p>
             </div>
 
             <div className="border-t border-white/5 pt-4 text-center">
-              <span className="text-[10px] text-slate-500">Google DeepMind - Antigravity Agent Coding</span>
+              <span className="text-[10px] text-slate-500">UNIPAZ - Estudiantes de Ingeniería de Sistemas</span>
             </div>
           </div>
         )}
