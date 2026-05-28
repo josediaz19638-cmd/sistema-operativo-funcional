@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="notepadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb0d9"/>
+      <stop offset="50%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#a21caf"/>
+    </linearGradient>
+  </defs>
+  <rect x="15" y="15" width="70" height="70" rx="12" fill="url(#notepadGrad)"/>
+  <rect x="35" y="10" width="30" height="10" rx="4" fill="#fff" opacity=".85"/>
+  <g stroke="#fff" stroke-linecap="round" opacity=".9">
+    <line x1="30" y1="35" x2="70" y2="35" stroke-width="4"/>
+    <line x1="30" y1="48" x2="60" y2="48" stroke-width="4"/>
+    <line x1="30" y1="61" x2="70" y2="61" stroke-width="4"/>
+    <line x1="30" y1="74" x2="50" y2="74" stroke-width="4"/>
+  </g>
+</svg>

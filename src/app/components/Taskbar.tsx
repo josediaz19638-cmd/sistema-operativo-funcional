@@ -28,7 +28,7 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
   const dockApps = [
     {
       name: 'Home',
-      icon: <AppIcon src="/icons/home.png" alt="Home" className="w-full h-full" compact customFallback={getFallbackSvg('Home')} />,
+      icon: <AppIcon src="/icons/home.svg" alt="Home" className="w-full h-full" compact customFallback={getFallbackSvg('Home')} />,
       app: undefined as string | undefined,
       isSystem: true,
       action: () => setShowStartMenu(prev => !prev),

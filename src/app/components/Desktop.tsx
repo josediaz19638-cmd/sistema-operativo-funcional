@@ -88,10 +88,10 @@ const DIAMONDS: DiamondConfig[] = [
 ];
 
 const WALLPAPER_FALLBACKS: Record<string, string[]> = {
-  '/wallpapers/wallpaper-1.jpg': ['/wallpapers/wallpaper-1.jpg', '/1.1.jpg'],
-  '/wallpapers/wallpaper-2.jpg': ['/wallpapers/wallpaper-2.jpg', '/2.jpg'],
-  '/wallpapers/wallpaper-3.png': ['/wallpapers/wallpaper-3.png', '/wallpaper.png'],
-  '/wallpapers/wallpaper-custom.png': ['/wallpapers/wallpaper-custom.png', '/wallpaper.png'],
+  '/wallpapers/wallpaper-1.svg': ['/wallpapers/wallpaper-1.svg', '/wallpapers/wallpaper-1.jpg', '/1.1.jpg'],
+  '/wallpapers/wallpaper-2.svg': ['/wallpapers/wallpaper-2.svg', '/wallpapers/wallpaper-2.jpg', '/2.jpg'],
+  '/wallpapers/wallpaper-3.svg': ['/wallpapers/wallpaper-3.svg', '/wallpapers/wallpaper-3.png', '/wallpaper.png'],
+  '/wallpapers/wallpaper-custom.svg': ['/wallpapers/wallpaper-custom.svg', '/wallpapers/wallpaper-custom.png', '/wallpaper.png'],
 };
 
 function resolveWallpaperCandidates(wallpaper: string) {

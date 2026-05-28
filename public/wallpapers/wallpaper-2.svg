@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#04131b"/>
+      <stop offset="50%" stop-color="#040612"/>
+      <stop offset="100%" stop-color="#020204"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="50%" cy="40%" r="35%">
+      <stop offset="0%" stop-color="#53d8ff" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#53d8ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="water" cx="50%" cy="100%" r="65%">
+      <stop offset="0%" stop-color="#1c89b8" stop-opacity=".38"/>
+      <stop offset="70%" stop-color="#5b21b6" stop-opacity=".15"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1160" cy="190" r="210" fill="url(#moon)"/>
+  <circle cx="1160" cy="190" r="78" fill="#6ce7ff" fill-opacity=".75"/>
+  <path d="M0 620c180-40 280 40 460 0s280-40 460 0 280 40 680 0v280H0z" fill="url(#water)"/>
+  <path d="M0 710c180-30 280 30 460 0s280-30 460 0 280 30 680 0v190H0z" fill="#02040a" fill-opacity=".85"/>
+  <path d="M1000 470c0 90-70 300-170 360" stroke="#fff" stroke-opacity=".25" stroke-width="18" stroke-linecap="round"/>
+  <path d="M1020 455c0 90-40 280-120 350" stroke="#53d8ff" stroke-opacity=".35" stroke-width="8" stroke-linecap="round"/>
+</svg>

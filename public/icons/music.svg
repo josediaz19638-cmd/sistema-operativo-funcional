@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="musicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#ca8aff"/>
+    </linearGradient>
+  </defs>
+  <path d="M38 68A9 7.5 0 1 1 29 60V26c0-3 2-5 5-5l32-8c3-1 6 1 6 4v38A9 7.5 0 1 1 63 47V28L38 34z" fill="url(#musicGrad)"/>
+</svg>
