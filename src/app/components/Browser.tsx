@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, ExternalLink, Globe, RotateCw, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Search, ExternalLink, Globe, RotateCw } from 'lucide-react';
 
 // Sitios que SÍ se pueden ver en iframe
 const SITIOS_VISIBLES = [
