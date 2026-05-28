@@ -31,3 +31,14 @@ export const START_MENU_APPS = APP_LIST.filter(app => app.showInStartMenu);
 export function getAppConfig(name: string): AppConfig | undefined {
   return APP_LIST.find(app => app.name === name);
 }
+
+export const DEFAULT_WALLPAPER = '/wallpapers/wallpaper-1.jpg';
+
+export const WALLPAPER_OPTIONS = [
+  { name: 'Neon Aurora', value: 'aurora', color: 'from-purple-900 to-pink-600', iconName: 'Sun' },
+  { name: 'Oscuro Puro', value: '', color: 'bg-[#03000b]', iconName: 'Moon' },
+  { name: 'Espacio Profundo', value: '/wallpapers/wallpaper-1.jpg', color: 'from-blue-900 to-indigo-950', iconName: 'Monitor' },
+  { name: 'Mar Nocturno', value: '/wallpapers/wallpaper-2.jpg', color: 'from-teal-900 to-slate-950', iconName: 'Monitor' },
+  { name: 'Abstracto', value: '/wallpapers/wallpaper-3.png', color: 'from-violet-900 to-fuchsia-950', iconName: 'Palette' },
+  { name: 'Personalizado', value: '/wallpapers/wallpaper-custom.png', color: 'from-fuchsia-900 to-purple-950', iconName: 'Settings' },
+] as const;

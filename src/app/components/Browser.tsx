@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, ExternalLink, Globe, RotateCw } from 'lucide-react';
+import { AppIcon } from './shared/AppIcon';
 
 // Sitios que SÍ se pueden ver en iframe
 const SITIOS_VISIBLES = [
@@ -130,7 +131,12 @@ export function Browser() {
             <div className="max-w-xl mx-auto">
               <div className="text-center mb-6">
                 <div className="w-20 h-20 mx-auto mb-3 rounded-2xl flex items-center justify-center overflow-hidden">
-                  <img src="/icons/seros.png" alt="SerOS" className="w-full h-full object-contain" />
+                  <AppIcon
+                    src="/icons/seros.png"
+                    alt="SerOS"
+                    className="w-14 h-14"
+                    customFallback={<span className="text-xs font-semibold text-purple-200">SerOS</span>}
+                  />
                 </div>
                 <h2 className="text-lg font-bold text-gray-800">SerOS - Navegador</h2>
                 <p className="text-xs text-gray-500 mt-1">

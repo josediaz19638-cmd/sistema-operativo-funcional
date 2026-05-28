@@ -12,7 +12,7 @@ import { MediaPlayer } from './components/MediaPlayer';
 import { MusicPlayer } from './components/MusicPlayer';
 import { RecycleBin } from './components/RecycleBin';
 import { AppIcon } from './components/shared/AppIcon';
-import { getAppConfig } from './data/appConfig';
+import { DEFAULT_WALLPAPER, getAppConfig } from './data/appConfig';
 
 interface WindowState {
   id: string;
@@ -25,7 +25,7 @@ export default function App() {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [nextZIndex, setNextZIndex] = useState(100);
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
-  const [selectedWallpaper, setSelectedWallpaper] = useState<string>('/1.1.jpg');
+  const [selectedWallpaper, setSelectedWallpaper] = useState<string>(DEFAULT_WALLPAPER);
   const [glassmorphismEnabled, setGlassmorphismEnabled] = useState(true);
 
   const openApp = (appName: string) => {

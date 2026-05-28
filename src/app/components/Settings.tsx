@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Settings as SettingsIcon, Monitor, Cpu, Shield, HelpCircle, Sun, Moon, Volume2, Palette } from 'lucide-react';
+import { AppIcon } from './shared/AppIcon';
+import { WALLPAPER_OPTIONS } from '../data/appConfig';
 
 interface SettingsProps {
   selectedWallpaper: string;
@@ -12,6 +14,13 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
   const [activeTab, setActiveTab] = useState<'system' | 'personalization' | 'about'>('system');
   const [cpuUsage, setCpuUsage] = useState(12);
   const [ramUsage, setRamUsage] = useState(4.2);
+  const wallpaperIconMap = {
+    Sun: <Sun className="w-3 h-3 text-yellow-300" />,
+    Moon: <Moon className="w-3 h-3 text-slate-300" />,
+    Monitor: <Monitor className="w-3 h-3 text-blue-300" />,
+    Palette: <Palette className="w-3 h-3 text-fuchsia-300" />,
+    Settings: <SettingsIcon className="w-3 h-3 text-fuchsia-200" />,
+  } as const;
 
   // Simular actividad del sistema
   useEffect(() => {
@@ -25,14 +34,6 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
     }, 2000);
     return () => clearInterval(interval);
   }, []);
-
-  const wallpaperOptions = [
-    { name: 'Neon Aurora', value: 'aurora', color: 'from-purple-900 to-pink-600', icon: <Sun className="w-3 h-3 text-yellow-300" /> },
-    { name: 'Oscuro Puro', value: '', color: 'bg-[#03000b]', icon: <Moon className="w-3 h-3 text-slate-300" /> },
-    { name: 'Espacio Profundo', value: '/1.1.jpg', color: 'from-blue-900 to-indigo-950', icon: <Monitor className="w-3 h-3 text-blue-300" /> },
-    { name: 'Mar Nocturno', value: '/2.jpg', color: 'from-teal-900 to-slate-950', icon: <Monitor className="w-3 h-3 text-teal-300" /> },
-    { name: 'Abstracto', value: '/wallpaper.png', color: 'from-violet-900 to-fuchsia-950', icon: <Palette className="w-3 h-3 text-fuchsia-300" /> },
-  ];
 
   return (
     <div className="h-full flex text-slate-100 bg-[#0d071e]/40 select-none">
@@ -133,7 +134,7 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
             <div className="p-4 rounded-xl bg-white/5 border border-white/5">
               <span className="text-xs font-bold text-white block mb-3">Fondo de Pantalla</span>
               <div className="flex gap-3 flex-wrap">
-                {wallpaperOptions.map((wp) => (
+                {WALLPAPER_OPTIONS.map((wp) => (
                   <button
                     key={wp.value}
                     onClick={() => onWallpaperChange(wp.value)}
@@ -143,7 +144,7 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
                         : 'border-white/10 hover:border-purple-400/50 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    {wp.icon}
+                    {wallpaperIconMap[wp.iconName]}
                     <span className={selectedWallpaper === wp.value ? 'text-white' : 'text-slate-400'}>
                       {wp.name}
                     </span>
@@ -203,7 +204,12 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
           <div className="space-y-6">
             <div className="text-center py-6">
               <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.5)] bg-white/5 p-2">
-                <img src="/icons/seros.png" alt="SerOS" className="w-full h-full object-contain" />
+                <AppIcon
+                  src="/icons/seros.png"
+                  alt="SerOS"
+                  className="w-14 h-14"
+                  customFallback={<span className="text-xs font-semibold text-purple-200">SerOS</span>}
+                />
               </div>
               <h2 className="text-xl font-black tracking-widest text-white mb-1">SerOS</h2>
               <span className="text-[10px] font-mono text-purple-400 font-bold bg-purple-950/40 px-2.5 py-0.5 rounded-full border border-purple-800/30">Version 1.0.0</span>
