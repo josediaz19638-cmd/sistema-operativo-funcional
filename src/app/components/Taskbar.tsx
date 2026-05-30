@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Power, Settings as SettingsIcon, User, Search } from 'lucide-react';
+import { Power, Settings as SettingsIcon, User, Search, LogOut } from 'lucide-react';
 import { AppIcon } from './shared/AppIcon';
 import { DOCK_APPS, START_MENU_APPS } from '../data/appConfig';
 import { fallbackSvgMap } from './shared/Icons';
@@ -9,9 +9,11 @@ interface TaskbarProps {
   onOpenApp: (appName: string) => void;
   activeWindow: string | null;
   onFocusWindow: (appName: string) => void;
+  onLogout: () => void;
+  userDisplayName: string;
 }
 
-export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }: TaskbarProps) {
+export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow, onLogout, userDisplayName }: TaskbarProps) {
   const [showStartMenu, setShowStartMenu] = useState(false);
 
   useEffect(() => {
@@ -51,7 +53,10 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
   const handleDockItemClick = (item: typeof dockApps[0]) => {
     if (item.isSystem && item.action) {
       item.action();
-    } else if (item.app) {
+      return;
+    }
+
+    if (item.app) {
       const isAlreadyOpen = openWindows.includes(item.app);
       if (isAlreadyOpen) {
         onFocusWindow(item.app);
@@ -79,33 +84,33 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
 
   return (
     <div className="relative flex flex-col items-center pb-5 select-none z-50 pointer-events-none">
-      {/* Start Menu */}
       {showStartMenu && (
         <>
           <div className="fixed inset-0 pointer-events-auto z-40" onClick={() => setShowStartMenu(false)} />
           <div className="absolute bottom-20 w-96 glass-panel border border-white/10 rounded-2xl overflow-hidden shadow-[0_15px_40px_rgba(138,50,255,0.25)] pointer-events-auto z-50 animate-in fade-in slide-in-from-bottom-5 duration-300">
-            {/* User Section */}
             <div className="bg-gradient-to-r from-purple-900/60 to-pink-900/60 p-4 border-b border-white/5">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-full bg-purple-500/20 border border-purple-400/30 flex items-center justify-center shadow-inner">
                   <User className="w-6 h-6 text-purple-200" />
                 </div>
                 <div>
-                  <div className="font-semibold text-white text-sm tracking-wide">Usuario Local</div>
+                  <div className="font-semibold text-white text-sm tracking-wide">{userDisplayName}</div>
                   <div className="text-[10px] text-purple-300 font-mono opacity-80">user@seros</div>
                 </div>
               </div>
             </div>
 
-            {/* Search */}
             <div className="p-3 border-b border-white/5 bg-black/20">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full">
                 <Search className="w-4 h-4 text-purple-300" />
-                <input type="text" placeholder="Buscar archivos o apps..." className="flex-1 bg-transparent outline-none text-xs text-white placeholder-purple-300/50" />
+                <input
+                  type="text"
+                  placeholder="Buscar archivos o apps..."
+                  className="flex-1 bg-transparent outline-none text-xs text-white placeholder-purple-300/50"
+                />
               </div>
             </div>
 
-            {/* Apps Grid */}
             <div className="p-4 bg-black/10">
               <div className="text-[10px] font-bold text-purple-300 tracking-widest uppercase mb-3 px-1">Aplicaciones</div>
               <div className="grid grid-cols-3 gap-3">
@@ -123,12 +128,31 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
               </div>
             </div>
 
-            {/* System Options */}
-            <div className="border-t border-white/5 p-2 bg-black/30 flex justify-between px-4">
-              <button onClick={() => { onOpenApp('Settings'); setShowStartMenu(false); }} className="flex items-center gap-2 px-3 py-1.5 hover:bg-white/5 rounded-lg text-xs text-purple-200 hover:text-white cursor-pointer transition-colors">
-                <SettingsIcon className="w-4 h-4" /> Configuración
+            <div className="border-t border-white/5 p-2 bg-black/30 flex justify-between px-4 flex-wrap gap-2">
+              <button
+                onClick={() => {
+                  onOpenApp('Settings');
+                  setShowStartMenu(false);
+                }}
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-white/5 rounded-lg text-xs text-purple-200 hover:text-white cursor-pointer transition-colors"
+              >
+                <SettingsIcon className="w-4 h-4" /> Configuracion
               </button>
-              <button onClick={() => { if(confirm('¿Desea apagar el sistema simulado?')) window.close(); }} className="flex items-center gap-2 px-3 py-1.5 hover:bg-red-500/10 rounded-lg text-xs text-red-400 hover:text-red-300 cursor-pointer transition-colors">
+              <button
+                onClick={() => {
+                  onLogout();
+                  setShowStartMenu(false);
+                }}
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-white/5 rounded-lg text-xs text-purple-200 hover:text-white cursor-pointer transition-colors"
+              >
+                <LogOut className="w-4 h-4" /> Cerrar sesion
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm('Desea apagar el sistema simulado?')) window.close();
+                }}
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-red-500/10 rounded-lg text-xs text-red-400 hover:text-red-300 cursor-pointer transition-colors"
+              >
                 <Power className="w-4 h-4" /> Apagar
               </button>
             </div>
@@ -136,9 +160,7 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
         </>
       )}
 
-      {/* Dock Container */}
       <div className="relative group/dock pointer-events-auto">
-        {/* Mirror Reflection */}
         <div className="absolute top-[102%] left-0 right-0 flex items-end justify-center gap-2.5 px-6 py-2.5 rounded-[24px] border border-white/5 opacity-[0.14] pointer-events-none z-10 select-none blur-[2.5px] scale-y-[-1] origin-top">
           {dockApps.map((item, idx) => (
             <div key={`reflect-${idx}`} className="w-12 h-12 flex items-center justify-center">
@@ -147,7 +169,6 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow }:
           ))}
         </div>
 
-        {/* The Dock */}
         <div className="flex items-end gap-2.5 px-6 py-2.5 rounded-[24px] glass-dock border border-white/10 relative z-30 transition-all duration-300 shadow-[0_15px_40px_-10px_rgba(138,50,255,0.4)]">
           {dockApps.map((item, index) => {
             const { isOpen, isActive } = getAppState(item.app);

@@ -13,6 +13,8 @@ import { MusicPlayer } from './components/MusicPlayer';
 import { RecycleBin } from './components/RecycleBin';
 import { AppIcon } from './components/shared/AppIcon';
 import { DEFAULT_WALLPAPER, getAppConfig } from './data/appConfig';
+import { clearSession, loadSession, type UserSession } from './auth';
+import { LoginScreen } from './components/LoginScreen';
 
 interface WindowState {
   id: string;
@@ -22,11 +24,28 @@ interface WindowState {
 }
 
 export default function App() {
+  const [session, setSession] = useState<UserSession | null>(() => loadSession());
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [nextZIndex, setNextZIndex] = useState(100);
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
   const [selectedWallpaper, setSelectedWallpaper] = useState<string>(DEFAULT_WALLPAPER);
   const [glassmorphismEnabled, setGlassmorphismEnabled] = useState(true);
+
+  const handleLogin = (userSession: UserSession) => {
+    setSession(userSession);
+  };
+
+  const handleLogout = () => {
+    clearSession();
+    setSession(null);
+    setWindows([]);
+    setNextZIndex(100);
+    setActiveWindow(null);
+  };
+
+  if (!session) {
+    return <LoginScreen onLogin={handleLogin} />;
+  }
 
   const openApp = (appName: string) => {
     const existingWindow = windows.find(w => w.app === appName);
@@ -154,6 +173,8 @@ export default function App() {
           onOpenApp={openApp}
           activeWindow={activeWindow}
           onFocusWindow={focusWindow}
+          onLogout={handleLogout}
+          userDisplayName={session.displayName}
         />
       </div>
     </div>
