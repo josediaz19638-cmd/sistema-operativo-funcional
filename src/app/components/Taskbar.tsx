@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Power, Settings as SettingsIcon, User, Search, LogOut } from 'lucide-react';
 import { AppIcon } from './shared/AppIcon';
-import { DOCK_APPS, START_MENU_APPS } from '../data/appConfig';
+import { ASSET_PATHS, DOCK_APPS, START_MENU_APPS } from '../data/appConfig';
 import { fallbackSvgMap } from './shared/Icons';
 
 interface TaskbarProps {
@@ -30,7 +30,7 @@ export function Taskbar({ openWindows, onOpenApp, activeWindow, onFocusWindow, o
   const dockApps = [
     {
       name: 'Home',
-      icon: <AppIcon src="/icons/home.svg" alt="Home" className="w-full h-full" compact customFallback={getFallbackSvg('Home')} />,
+      icon: <AppIcon src={ASSET_PATHS.icons.home} alt="Home" className="w-full h-full" compact customFallback={getFallbackSvg('Home')} />,
       app: undefined as string | undefined,
       isSystem: true,
       action: () => setShowStartMenu(prev => !prev),

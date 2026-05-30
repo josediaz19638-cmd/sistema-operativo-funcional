@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Eye, EyeOff, Lock, LogIn, CircleAlert, UserRound, Sparkles } from 'lucide-react';
 import { AppIcon } from './shared/AppIcon';
 import { login, type UserSession } from '../auth';
+import { ASSET_PATHS } from '../data/appConfig';
 
 interface LoginScreenProps {
   onLogin: (session: UserSession) => void;
@@ -56,7 +57,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <div className="flex items-center justify-center mb-4">
               <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white/5 flex items-center justify-center">
                 <AppIcon
-                  src="/icons/seros.svg"
+                  src={ASSET_PATHS.icons.seros}
                   alt="SerOS"
                   className="w-14 h-14"
                   customFallback={<span className="text-sm font-semibold text-purple-100">SER OS</span>}

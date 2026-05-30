@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useResolvedAssetSource } from './shared/assetUtils';
 
 // =========================================================================
 // RUTA DE TU FONDO DE PANTALLA:
@@ -87,59 +87,6 @@ const DIAMONDS: DiamondConfig[] = [
   { top: '56%', right: '10%', size: 2.5, bg: 'rgba(236,72,153,0.15)', borderColor: 'rgba(236,72,153,0.05)', hasBlur: false },
 ];
 
-const WALLPAPER_FALLBACKS: Record<string, string[]> = {
-  '/wallpapers/wallpaper-1.svg': ['/wallpapers/wallpaper-1.svg', '/wallpapers/wallpaper-1.jpg', '/1.1.jpg'],
-  '/wallpapers/wallpaper-2.svg': ['/wallpapers/wallpaper-2.svg', '/wallpapers/wallpaper-2.jpg', '/2.jpg'],
-  '/wallpapers/wallpaper-3.svg': ['/wallpapers/wallpaper-3.svg', '/wallpapers/wallpaper-3.png', '/wallpaper.png'],
-  '/wallpapers/wallpaper-custom.svg': ['/wallpapers/wallpaper-custom.svg', '/wallpapers/wallpaper-custom.png', '/wallpaper.png'],
-};
-
-function resolveWallpaperCandidates(wallpaper: string) {
-  return WALLPAPER_FALLBACKS[wallpaper] ?? [wallpaper];
-}
-
-function useResolvedWallpaper(wallpaper: string) {
-  const [resolvedWallpaper, setResolvedWallpaper] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    if (!wallpaper || wallpaper === 'aurora') {
-      setResolvedWallpaper(null);
-      return () => {
-        cancelled = true;
-      };
-    }
-
-    const candidates = resolveWallpaperCandidates(wallpaper);
-    setResolvedWallpaper(null);
-
-    const tryCandidate = (index: number) => {
-      if (cancelled) return;
-      if (index >= candidates.length) {
-        setResolvedWallpaper('');
-        return;
-      }
-
-      const candidate = candidates[index];
-      const image = new Image();
-      image.onload = () => {
-        if (!cancelled) setResolvedWallpaper(candidate);
-      };
-      image.onerror = () => tryCandidate(index + 1);
-      image.src = candidate;
-    };
-
-    tryCandidate(0);
-
-    return () => {
-      cancelled = true;
-    };
-  }, [wallpaper]);
-
-  return resolvedWallpaper;
-}
-
 function AuroraElement({ aurora }: { aurora: AuroraConfig }) {
   const isLeft = aurora.side === 'left';
   return (
@@ -199,7 +146,7 @@ function DiamondElement({ diamond }: { diamond: DiamondConfig }) {
 
 export function Desktop({ onOpenApp, wallpaper = '' }: DesktopProps) {
   const showWallpaper = wallpaper !== 'aurora' && wallpaper !== '';
-  const resolvedWallpaper = useResolvedWallpaper(wallpaper);
+  const resolvedWallpaper = useResolvedAssetSource(wallpaper);
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#060012] select-none">

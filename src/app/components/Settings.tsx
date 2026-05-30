@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Settings as SettingsIcon, Monitor, Cpu, Shield, HelpCircle, Sun, Moon, Volume2, Palette } from 'lucide-react';
 import { AppIcon } from './shared/AppIcon';
-import { WALLPAPER_OPTIONS } from '../data/appConfig';
+import { ASSET_PATHS, WALLPAPER_OPTIONS } from '../data/appConfig';
 
 interface SettingsProps {
   selectedWallpaper: string;
@@ -205,7 +205,7 @@ export function Settings({ selectedWallpaper, glassmorphismEnabled, onWallpaperC
             <div className="text-center py-6">
               <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.5)] bg-white/5 p-2">
                 <AppIcon
-                  src="/icons/seros.svg"
+                  src={ASSET_PATHS.icons.seros}
                   alt="SerOS"
                   className="w-14 h-14"
                   customFallback={<span className="text-xs font-semibold text-purple-200">SerOS</span>}
